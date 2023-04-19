@@ -7,7 +7,7 @@ pub fn cli() -> App {
         // subcommand aliases are handled in aliased_command()
         // .alias("c")
         .about("Check a local package and all of its dependencies for errors")
-        .arg(opt("quiet", "Do not print cargo log messages").short("q"))
+        .arg_quiet()
         .arg_package_spec(
             "Package(s) to check",
             "Check all packages in the workspace",
@@ -39,7 +39,7 @@ pub fn cli() -> App {
         .after_help("Run `cargo help check` for more detailed information.\n")
 }
 
-pub fn exec(config: &mut Config, args: &ArgMatches<'_>) -> CliResult {
+pub fn exec(config: &mut Config, args: &ArgMatches) -> CliResult {
     let ws = args.workspace(config)?;
     // This is a legacy behavior that causes `cargo check` to pass `--test`.
     let test = matches!(args.value_of("profile"), Some("test"));
