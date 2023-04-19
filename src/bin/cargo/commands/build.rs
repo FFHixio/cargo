@@ -7,7 +7,7 @@ pub fn cli() -> App {
         // subcommand aliases are handled in aliased_command()
         // .alias("b")
         .about("Compile a local package and all of its dependencies")
-        .arg(opt("quiet", "Do not print cargo log messages").short("q"))
+        .arg_quiet()
         .arg_package_spec(
             "Package to build (see `cargo help pkgid`)",
             "Build all packages in the workspace",
@@ -47,7 +47,7 @@ pub fn cli() -> App {
         .after_help("Run `cargo help build` for more detailed information.\n")
 }
 
-pub fn exec(config: &mut Config, args: &ArgMatches<'_>) -> CliResult {
+pub fn exec(config: &mut Config, args: &ArgMatches) -> CliResult {
     let ws = args.workspace(config)?;
     let mut compile_opts = args.compile_options(
         config,
